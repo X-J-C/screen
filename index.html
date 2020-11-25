@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>大屏</title>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+<link rel="stylesheet" href="css/comon0.css">
+<link rel="stylesheet" href="css/zoomify.min.css" />
+<link rel="stylesheet" href="css/sliderx.css">
+</head>
+	<script>
+	$(window).load(function(){  
+             $(".loading").fadeOut()
+            })  
+			
+/****/
+$(document).ready(function(){
+	var whei=$(window).width()
+	$("html").css({fontSize:whei/20})
+	$(window).resize(function(){
+		var whei=$(window).width()
+	 $("html").css({fontSize:whei/20})
+});
+	});
+	</script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+   <!-- <script  type="text/javascript" src="js/echarts.js"></script> -->
+      <script type="text/javascript" src="js/echarts-gl.min.js" charset="utf-8"></script>
+  <!--  <script type="text/javascript" src="js/echarts-gl.js" charset="utf-8"></script> -->
+   <!-- <script type="text/javascript" src="js/echart-gl.js" charset="utf-8"></script> -->
+  <!-- <script type="text/javascript" src="js/echarts-gl.js" charset="utf-8"></script> -->
+   <script type="text/javascript" src="js/guangxi.js" charset="utf-8"></script>
+	<script language="JavaScript" src="js/js.js"></script> 
+	<script  src="js/zoomify.min.js"></script>
+<body>
+<div class="canvas" style="opacity: .2">
+	<iframe frameborder="0" src="js/index.html" style="width: 100%; height: 100%"></iframe>
+	</div>
+<div class="loading">
+  <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
+</div>
+<div class="head">
+  <h1>基建安全智能管控平台</h1>
+  <div class="weather"><!--<img src="picture/weather.png"><span>多云转小雨</span>--><span id="showTime"></span></div>
+	
+	<script>
+var t = null;
+    t = setTimeout(time,1000);//開始运行
+    function time()
+    {
+       clearTimeout(t);//清除定时器
+       dt = new Date();
+		var y=dt.getFullYear();
+		var mt=dt.getMonth()+1;
+		var day=dt.getDate();
+       var h=dt.getHours();//获取时
+       var m=dt.getMinutes();//获取分
+       var s=dt.getSeconds();//获取秒
+       document.getElementById("showTime").innerHTML = y+"年"+mt+"月"+day+"-"+h+"时"+m+"分"+s+"秒";
+       t = setTimeout(time,1000); //设定定时器，循环运行     
+    } 
+
+</script>
+	
+	
+</div>
+<div class="mainbox">
+  <ul class="clearfix">
+    <li>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">项目</div>
+        <div class="allnav" >
+			<div class="height80 m-panel-ct-ct">
+				<ul class="totalInfo">
+					<li >
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon1.png" />
+						</div>
+						<div class="textbox">
+							<h3>告警总数</h3>
+							<p>11</p>
+						</div>
+					</li>
+					<li >
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon2.png" />
+						</div>
+						<div class="textbox">
+							<h3>设备总数</h3>
+							<p>38</p>
+						</div>
+					</li>
+					<li >
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon3.png" />
+						</div>
+						<div class="textbox">
+							<h3>故障总数</h3>
+							<p>17</p>
+						</div>
+					</li >
+					<li >
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon4.png" />
+						</div>
+						<div class="textbox">
+							<h3>隐患总数</h3>
+							<p>7</p>
+						</div>
+					</li>
+					<li class="cursor">
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon5.png" />
+						</div>
+						<div class="textbox">
+							<h3>联网单位总数</h3>
+							<p>22</p>
+						</div>
+					</li>
+					<li >
+						<div class="imagesbox text-center">
+							<img src="images/icon/icon6.png" />
+						</div>
+						<div class="textbox">
+							<h3>用户总数</h3>
+							<p>16</p>
+						</div>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">深基坑</div>
+        <div class="allnav" id="echart1"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">高支模</div>
+        <div class="allnav" id="echart4"></div>
+        <div class="boxfoot"></div>
+      </div>
+      
+    </li>
+    <li>
+      <div class="map" style="height: 6.4rem">
+        <div class="map4" id="map_1" ></div>
+      </div>
+       <div class="boxall" style="height: 3.3rem">
+        <div class="alltitle">告警列表</div>
+          <div id="monitorAlarmBox"  style="height: 200px;margin-bottom: 1%;border: 0;color: #fff">
+                                <div class="col-xs-12" style="height: 100%; position: relative; overflow: hidden;">
+                                    <table id="monitorAlarmDetailTable" class="m-table table-hide">
+                                        <thead>
+                                        <tr>
+                                           
+                                            <th class="txt-hide " title="工地名称" style="width: 15%;font-size: 18px;">工地名称</th>
+                                            <th class="txt-hide " title="告警源" style="width: 20%;font-size: 18px;">告警源</th>
+                                            <th class="txt-hide " title="等级" style="width: 10%;font-size: 18px;">等级</th>
+                                            <th class="txt-hide " title="告警信息" style="width: 35%;font-size: 18px;">告警信息</th>
+                                            <th class="txt-hide " title="时间" style="width: 20%;font-size: 18px;">时间</th>
+                                            
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="txt-hide " >展览会</td>
+                                            <td class="txt-hide " >03#下</td>
+                                            <td class="txt-hide ">I</td>
+                                            <td class="txt-hide " >传感器测量值超过2级告警阈值:角度采集值:0.07°,超2级阈值[0.06~0.08]</td>
+                                             <td class="txt-hide ">2020-11-13 11:20</td>
+                                        </tr>
+                                       <tr>
+                                            <td class="txt-hide " >展览会</td>
+                                            <td class="txt-hide " >03#下</td>
+                                            <td class="txt-hide ">I</td>
+                                            <td class="txt-hide " >传感器测量值超过2级告警阈值:角度采集值:0.07°,超2级阈值[0.06~0.08]</td>
+                                             <td class="txt-hide ">2020-11-13 11:20</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="txt-hide " >展览会</td>
+                                            <td class="txt-hide " >03#下</td>
+                                            <td class="txt-hide ">I</td>
+                                            <td class="txt-hide " >传感器测量值超过2级告警阈值:角度采集值:0.07°,超2级阈值[0.06~0.08]</td>
+                                             <td class="txt-hide ">2020-11-13 11:20</td>
+                                        </tr>
+                                        
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>      
+                            </div>
+        <div class="boxfoot"></div>
+      </div>
+    </li>
+    <li>
+          <div class="boxall" style="height:3rem">
+        <div class="alltitle">车吊</div>
+        <div class="allnav" >
+           <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images/car3.png" style="height:2.5rem;float: left;">
+          <div style="float: left; height: 2.5rem;margin-left: 60px;">
+            <div>
+             <p style="color: #87abed;font-size: 18px">倾斜角度<span style="position: relative;top: 20px;left: 50px;color: #fff">73.2°</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">幅度<span style="position: relative;top: 20px;left: 80px;color: #fff">15.28m</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">吊钩下放高度<span style="position: relative;top: 20px;left: 10px;color: #fff">54.36m</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">吊钩起升速度<span style="position: relative;top: 20px;left: 10px;color: #fff">0 m/s</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+          </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="images/car2.png" style="height:2.5rem;float: left;">
+          <div style="float: left; height: 2.5rem;margin-left: 60px;">
+            <div>
+             <p style="color: #87abed;font-size: 18px">倾斜角度<span style="position: relative;top: 20px;left: 50px;color: #fff">60°</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">幅度<span style="position: relative;top: 20px;left: 80px;color: #fff">20m</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">吊钩下放高度<span style="position: relative;top: 20px;left: 10px;color: #fff">56m</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+           <div>
+             <p style="color: #87abed;font-size: 18px">吊钩起升速度<span style="position: relative;top: 20px;left: 10px;color: #fff">20 m/s</span></p>
+             <img src="images/leftline2.png" style="width: 200px;height: 30px">
+           </div>
+          </div>
+            </div>
+           
+        </div>
+         <div class="igt_btn">
+                <div class="igt_next"></div>
+                <div class="igt_prev"></div>
+            </div>
+            <div class="igt_page" style="position: relative;top: -20px;left: 200px;"></div>
+      
+    </div>
+
+        </div>
+        <div class="boxfoot"></div>
+      </div>
+     
+      <div class="boxall" style="height: 6.75rem">
+        <div class="alltitle">违规行为智能识别</div>
+         <div id="echart3" style="height: 2rem;"></div>
+          <div id="echart2" style="height: 2rem;" style="float: left;margin-bottom: 5px;"></div>
+        <div class="control-box" style="height: 2rem;width: 5.2rem">
+  <ul>
+    <li class="prev">
+      <img src="images/left_02.png" alt="prev">
+    </li>
+    <li class="next">
+      <img src="images/right_02.png" alt="next">
+    </li>
+  </ul>
+  <div class="bigbox">
+    <div id="switcher">
+      <div class="content_1">
+        <img class="box" src="images/photo.jpg">
+       <img class="box" src="images/photo.jpg">
+		   
+      </div>
+      <div class="content_2"></div>
+    </div>
+  </div>
+</div>
+      
+        <div class="boxfoot"></div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="back"></div>
+
+
+<script type="text/javascript" src="js/china.js"></script> 
+<script type="text/javascript" src="js/area_echarts.js"></script> 
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/sliderx.js"></script>
+<script type="text/javascript">
+  // 参数1 tableID,参数2 div高度，参数3 速度，参数4 tbody中tr几条以上滚动
+   tableScroll('monitorAlarmDetailTable', 200, 400, 2,2200);
+    
+    var MyMarhq;    
+    function tableScroll(tableid, hei, speed, len,zindex) {
+        clearTimeout(MyMarhq);
+        $('#' + tableid).parent().find('.tableid_'+tableid).remove()
+        $('#' + tableid).parent().prepend(
+            '<table class="tableid_'+tableid+'"><thead>' + $('#' + tableid + ' thead').html() + '</thead></table>'
+        ).css({
+            'position': 'relative',
+            'overflow': 'hidden'
+            // 'height': hei + 'px'
+        })
+        $(".tableid_"+tableid).find('th').each(function(i) {
+            $(this).css('width', $('#' + tableid).find('th:eq(' + i + ')').width());
+        });
+        $(".tableid_"+tableid).css({
+            'position': 'absolute',
+            'top': "-10px",
+            'left': 0,
+            'z-index': 2201,
+            'width': '100%',
+        })
+        $('#' + tableid).css({
+            'position': 'absolute',
+            'top': "-5px",
+            'left': '0px',
+            'z-index': zindex
+        })
+    
+        if ($('#' + tableid).find('tbody tr').length > len) {
+            $('#' + tableid).find('tbody').html($('#' + tableid).find('tbody').html());
+            $(".tableid_"+tableid).css('top', "-10px");
+            $('#' + tableid).css('top', "-5px");
+            var tblTop = 0;
+            var outerHeight = $('#' + tableid).find('tbody').find("tr").outerHeight();
+    
+            function Marqueehq() {
+                if (tblTop <= -outerHeight * $('#' + tableid).find('tbody').find("tr").length) {
+                    tblTop = 0;
+                } else {
+                    tblTop -= 1;
+                }
+                $('#' + tableid).css('margin-top', tblTop + 'px');
+                // clearTimeout(MyMarhq);
+                MyMarhq = setTimeout(function() {
+                    Marqueehq()
+                }, speed);
+            }
+            Marqueehq();
+            MyMarhq = setTimeout(Marqueehq, speed);
+            $('#' + tableid).find('tbody').hover(function() {
+                clearTimeout(MyMarhq);
+            }, function() {
+                clearTimeout(MyMarhq);
+                if ($('#' + tableid).find('tbody tr').length > len) {
+                    MyMarhq = setTimeout(Marqueehq, speed);
+                }
+            })
+        }
+    }
+    var mySwiper = new Swiper ('.swiper-container', {
+             effect : 'slide',
+              loop: true,
+              autoplay : {
+                delay:5000,//滚动速度
+                disableOnInteraction: false,
+              },
+              navigation: {
+                 nextEl: '.igt_next',
+                 prevEl: '.igt_prev',
+              },
+              pagination: {
+                el: '.igt_page',
+                clickable: true,
+              }
+        })   
+  $('.box').zoomify();
+</script>
+</body>
+</html>
